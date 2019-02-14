@@ -207,6 +207,12 @@ func resourceStatusCakeTest() *schema.Resource {
 				Optional: true,
 			},
 
+			"enable_ssl_alert": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+			},
+
 			"follow_redirect": {
 				Type:     schema.TypeBool,
 				Optional: true,
@@ -250,6 +256,7 @@ func CreateTest(d *schema.ResourceData, meta interface{}) error {
 		UseJar:         d.Get("use_jar").(int),
 		PostRaw:        d.Get("post_raw").(string),
 		FinalEndpoint:  d.Get("final_endpoint").(string),
+		EnableSSLAlert: d.Get("enable_ssl_alert").(bool),
 		FollowRedirect: d.Get("follow_redirect").(bool),
 	}
 
@@ -336,6 +343,7 @@ func ReadTest(d *schema.ResourceData, meta interface{}) error {
 	d.Set("use_jar", testResp.UseJar)
 	d.Set("post_raw", testResp.PostRaw)
 	d.Set("final_endpoint", testResp.FinalEndpoint)
+	d.Set("enable_ssl_alert", testResp.EnableSSLAlert)
 	d.Set("follow_redirect", testResp.FollowRedirect)
 
 	return nil
@@ -435,6 +443,9 @@ func getStatusCakeTestInput(d *schema.ResourceData) *statuscake.Test {
 	}
 	if v, ok := d.GetOk("final_endpoint"); ok {
 		test.FinalEndpoint = v.(string)
+	}
+	if v, ok := d.GetOk("enable_ssl_alert"); ok {
+		test.EnableSSLAlert = v.(bool)
 	}
 	if v, ok := d.GetOk("follow_redirect"); ok {
 		test.FollowRedirect = v.(bool)
