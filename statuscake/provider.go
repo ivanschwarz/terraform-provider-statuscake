@@ -24,7 +24,8 @@ func Provider() terraform.ResourceProvider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"statuscake_test": resourceStatusCakeTest(),
+			"statuscake_test":     resourceStatusCakeTest(),
+			"statuscake_ssl_test": resourceStatusCakeSSLTest(),
 		},
 
 		ConfigureFunc: providerConfigure,

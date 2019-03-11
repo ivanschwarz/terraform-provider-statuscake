@@ -61,6 +61,7 @@ type Client struct {
 	username    string
 	apiKey      string
 	testsClient Tests
+	sslsClient  Ssls
 }
 
 // New returns a new Client
@@ -167,4 +168,13 @@ func (c *Client) Tests() Tests {
 	}
 
 	return c.testsClient
+}
+
+// Tests returns a client that implements the `Ssls` API.
+func (c *Client) Ssls() Ssls {
+	if c.sslsClient == nil {
+		c.sslsClient = newSsls(c)
+	}
+
+	return c.sslsClient
 }
